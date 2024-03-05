@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_video_info/flutter_video_info.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -11,8 +12,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  getExternalStoragePermission() async {
-    await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+  Future<PermissionStatus> getExternalStoragePermission() async {
+    return Permission.storage.request();
   }
 
   final videoInfo = FlutterVideoInfo();
@@ -39,12 +40,11 @@ class _MyAppState extends State<MyApp> {
     var a = await videoInfo.getVideoInfo(videoFilePath);
     setState(() {
       info =
-          "title=> ${a.title}\npath=> ${a.path}\nauthor=> ${a.author}\nmimetype=> ${a.mimetype}";
+          "title=> ${a?.title}\npath=> ${a?.path}\nauthor=> ${a?.author}\nmimetype=> ${a?.mimetype}";
       info +=
-          "\nheight=> ${a.height}\nwidth=> ${a.width}\nfileSize=> ${a.filesize} Bytes\nduration=> ${a.duration} milisec";
-      info +=
-          "\norientation=> ${a.orientation}\ndate=> ${a.date}\nframerate=> ${a.framerate}";
-      info += "\nlocation=> ${a.location}";
+          "\nheight=> ${a?.height}\nwidth=> ${a?.width}\nfileSize=> ${a?.filesize} Bytes\nduration=> ${a?.duration} milisec";
+      info += "\norientation=> ${a?.orientation}\ndate=> ${a?.date}\nframerate=> ${a?.framerate}";
+      info += "\nlocation=> ${a?.location}";
     });
   }
 
